@@ -1,0 +1,15 @@
+#!/bin/bash
+set -euo pipefail
+
+cd src-1.0
+zip -r ../make-it-red-1.0.xpi *
+cd ../src-1.1
+zip -r ../make-it-red-1.1.xpi *
+cd ../src-2.0
+zip -r ../make-it-red-2.0.xpi *
+cd ..
+
+jq ".addons[\"make-it-red@zotero.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 make-it-red-1.1.xpi | cut -d' ' -f1`\"" updates.json > updates.json.tmp
+jq ".addons[\"make-it-red@zotero.org\"].updates[1].update_hash = \"sha256:`shasum -a 256 make-it-red-2.0.xpi | cut -d' ' -f1`\"" updates.json.tmp > updates.json
+
+rm updates.json.tmp

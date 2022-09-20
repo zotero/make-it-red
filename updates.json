@@ -1,0 +1,28 @@
+{
+  "addons": {
+    "make-it-red@zotero.org": {
+      "updates": [
+        {
+          "version": "1.1",
+          "update_link": "https://zotero-download.s3.amazonaws.com/tmp/make-it-red/make-it-red-1.1.xpi",
+          "update_hash": "sha256:93dd1dfa055bd29f83aa257a930ddf0fd1f98914fe73432dcaa04067098edc84",
+          "applications": {
+            "gecko": {
+              "strict_min_version": "60.0"
+            }
+          }
+        },
+        {
+          "version": "2.0",
+          "update_link": "https://zotero-download.s3.amazonaws.com/tmp/make-it-red/make-it-red-2.0.xpi",
+          "update_hash": "sha256:ae13394fc229f5be8388073d53caee9f246b61e3f64fc0cd354ee4b3f8add946",
+          "applications": {
+            "zotero": {
+              "strict_min_version": "7.0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
