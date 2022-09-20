@@ -20,7 +20,6 @@
         <em:type>2</em:type> <!-- type=extension -->
         <em:iconURL>chrome://make-it-red/skin/icon.png</em:iconURL>
         <em:icon64URL>chrome://make-it-red/skin/icon64.png</em:icon64URL>
-        <em:bootstrap>true</em:bootstrap>
 
         <em:targetApplication>
             <Description>

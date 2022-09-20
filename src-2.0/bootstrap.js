@@ -5,11 +5,11 @@ function log(msg) {
 }
 
 function install() {
-	log("Installed!");
+	log("Installed");
 }
 
 async function startup({ id, version, rootURI }) {
-	log("Started!");
+	log("Starting");
 	
 	// Add a stylesheet to the main Zotero pane
 	var zp = Zotero.getActiveZoteroPane();
@@ -24,11 +24,11 @@ async function startup({ id, version, rootURI }) {
 	}
 	
 	Services.scriptloader.loadSubScript(rootURI + 'lib.js');
-	foo();
+	Zotero.MakeItRed.foo();
 }
 
 function shutdown() {
-	log("Shutting down!");
+	log("Shutting down");
 	
 	// Remove stylesheet
 	var zp = Zotero.getActiveZoteroPane();
@@ -39,5 +39,5 @@ function shutdown() {
 }
 
 function uninstall() {
-	log("Uninstalled!");
+	log("Uninstalled");
 }

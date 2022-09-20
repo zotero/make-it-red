@@ -38,18 +38,21 @@ async function waitForZotero() {
 			Services.wm.addListener(listener);
 		});
 	}
+	await Zotero.initializationPromise;
 }
 
 async function install() {
 	// Wait until 'Zotero' is available in Zotero 6
 	await waitForZotero();
 	
-	log("Installed!");
+	log("Installed");
 }
 
 async function startup({ id, version, resourceURI, rootURI }) {
 	// Wait until 'Zotero' is available in Zotero 6
 	await waitForZotero();
+	
+	log("Starting");
 	
 	// String 'rootURI' introduced in Zotero 7
 	if (!rootURI) {
@@ -75,11 +78,11 @@ async function startup({ id, version, resourceURI, rootURI }) {
 		var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 	}
 	Services.scriptloader.loadSubScript(rootURI + 'lib.js');
-	foo();
+	Zotero.MakeItRed.foo();
 }
 
 function shutdown() {
-	log("Shutting down!");
+	log("Shutting down");
 	
 	// Remove stylesheet
 	var zp = Zotero.getActiveZoteroPane();
@@ -90,5 +93,5 @@ function shutdown() {
 }
 
 function uninstall() {
-	log("Uninstalled!");
+	log("Uninstalled");
 }

@@ -1,0 +1,3 @@
+content   make-it-red             chrome/content/
+skin      make-it-red   default   chrome/skin/
+overlay	chrome://zotero/content/zoteroPane.xul chrome://make-it-red/content/overlay.xul
