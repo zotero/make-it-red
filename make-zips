@@ -1,15 +1,26 @@
 #!/bin/bash
 set -euo pipefail
 
+rm -rf build
+mkdir build
+
 cd src-1.0
-zip -r ../make-it-red-1.0.xpi *
+zip -r ../build/make-it-red-1.0.xpi *
 cd ../src-1.1
-zip -r ../make-it-red-1.1.xpi *
+zip -r ../build/make-it-red-1.1.xpi *
+cd ../src-1.2
+zip -r ../build/make-it-red-1.2.xpi *
 cd ../src-2.0
-zip -r ../make-it-red-2.0.xpi *
-cd ..
+zip -r ../build/make-it-red-2.0.xpi *
+cd ../build
 
-jq ".addons[\"make-it-red@zotero.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 make-it-red-1.1.xpi | cut -d' ' -f1`\"" updates.json > updates.json.tmp
-jq ".addons[\"make-it-red@zotero.org\"].updates[1].update_hash = \"sha256:`shasum -a 256 make-it-red-2.0.xpi | cut -d' ' -f1`\"" updates.json.tmp > updates.json
+jq ".addons[\"make-it-red@zotero.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 make-it-red-1.1.xpi | cut -d' ' -f1`\"" ../updates-1.0.json.tmpl > updates-1.0.json
+cp updates-1.0.json update.rdf
 
-rm updates.json.tmp
+jq ".addons[\"make-it-red@zotero.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 make-it-red-1.2.xpi | cut -d' ' -f1`\"" ../updates-1.1.json.tmpl | \
+	jq ".addons[\"make-it-red@zotero.org\"].updates[1].update_hash = \"sha256:`shasum -a 256 make-it-red-2.0.xpi | cut -d' ' -f1`\"" > updates-1.1.json
+
+jq ".addons[\"make-it-red@zotero.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 make-it-red-1.2.xpi | cut -d' ' -f1`\"" ../updates-1.2.json.tmpl | \
+	jq ".addons[\"make-it-red@zotero.org\"].updates[1].update_hash = \"sha256:`shasum -a 256 make-it-red-2.0.xpi | cut -d' ' -f1`\"" > updates-1.2.json
+
+jq ".addons[\"make-it-red@zotero.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 make-it-red-2.0.xpi | cut -d' ' -f1`\"" ../updates-2.0.json.tmpl > updates-2.0.json

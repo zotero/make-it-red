@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://make-it-red/skin/overlay.css" type="text/css"?>
+
+<overlay id="make-it-red-overlay"
+		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script src="overlay.js"/>
+	<script src="lib.js"/>
+</overlay>
