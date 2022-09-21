@@ -14,7 +14,9 @@ function log(msg) {
 // In Zotero 7, bootstrap methods are not called until Zotero is initialized, and the 'Zotero' is
 // automatically made available.
 async function waitForZotero() {
-	if (typeof Zotero != 'undefined') return;
+	if (typeof Zotero != 'undefined') {
+		await Zotero.initializationPromise;
+	}
 	
 	var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 	var windows = Services.wm.getEnumerator('navigator:browser');
