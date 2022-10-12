@@ -1,4 +1,8 @@
 var stylesheetID = 'make-it-red-stylesheet';
+var ftlID = 'make-it-red-ftl';
+var menuitemID = 'make-it-green-instead';
+var addedElementIDs = [stylesheetID, ftlID, menuitemID];
+
 if (typeof Zotero == 'undefined') {
 	var Zotero;
 }
@@ -57,28 +61,39 @@ async function install() {
 	log("Installed");
 }
 
-async function startup({ id, version, resourceURI, rootURI }) {
+async function startup({ id, version, resourceURI, rootURI = resourceURI.spec }) {
 	await waitForZotero();
 	
 	log("Starting");
 	
-	// String 'rootURI' introduced in Zotero 7
-	if (!rootURI) {
-		rootURI  = resourceURI.spec;
-	}
-	
-	// Add a stylesheet to the main Zotero pane
-	var zp = Zotero.getActiveZoteroPane();
-	if (zp) {
-		let doc = zp.document;
-		// createElementNS() necessary in Zotero 6; createElement() defaults to HTML in Zotero 7
-		let HTML_NS = "http://www.w3.org/1999/xhtml";
-		let link = doc.createElementNS(HTML_NS, 'link');
-		link.id = stylesheetID;
-		link.type = 'text/css';
-		link.rel = 'stylesheet';
-		link.href = rootURI + 'style.css';
-		doc.documentElement.appendChild(link);
+	// Add DOM elements to the main Zotero pane
+	var win = Zotero.getMainWindow();
+	if (win && win.ZoteroPane) {
+		let zp = win.ZoteroPane;
+		let doc = win.document;
+		
+		// createElement() defaults to HTML in Zotero 7
+		let link1 = doc.createElement('link');
+		link1.id = stylesheetID;
+		link1.type = 'text/css';
+		link1.rel = 'stylesheet';
+		link1.href = rootURI + 'style.css';
+		doc.documentElement.appendChild(link1);
+
+		// We're running in Zotero 7, so use our Fluent localizations
+		let link2 = doc.createElement('link');
+		link2.id = ftlID;
+		link2.rel = 'localization';
+		link2.href = 'make-it-red.ftl';
+		doc.documentElement.appendChild(link2);
+
+		// createXULElement() is available in Zotero 7
+		let menuitem = doc.createXULElement('menuitem');
+		menuitem.id = menuitemID;
+		menuitem.setAttribute('type', 'checkbox');
+		menuitem.setAttribute('data-l10n-id', 'make-it-green-instead');
+		menuitem.addEventListener('command', () => Zotero.MakeItRed.toggleGreen(menuitem.checked));
+		doc.getElementById('menu_viewPopup').appendChild(menuitem);
 	}
 	
 	// 'Services' may not be available in Zotero 6
@@ -95,8 +110,9 @@ function shutdown() {
 	// Remove stylesheet
 	var zp = Zotero.getActiveZoteroPane();
 	if (zp) {
-		let stylesheet = zp.document.getElementById(stylesheetID);
-		stylesheet.parentNode.removeChild(stylesheet);
+		for (let id of addedElementIDs) {
+			zp.document.getElementById(id)?.remove();
+		}
 	}
 }
 

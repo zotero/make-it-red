@@ -6,6 +6,11 @@ if (!Zotero.MakeItRed) {
 		
 		async foo() {
 			this.log("Make It Red: Foo");
+		},
+		
+		toggleGreen(enabled) {
+			Zotero.getMainWindow().document.documentElement
+				.toggleAttribute('data-green-instead', enabled);
 		}
 	};
 }
