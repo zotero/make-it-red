@@ -1,3 +1,4 @@
 content   make-it-red             chrome/content/
 skin      make-it-red   default   chrome/skin/
+locale    make-it-red   en-US     chrome/locale/en-US/
 overlay	chrome://zotero/content/zoteroPane.xul chrome://make-it-red/content/overlay.xul

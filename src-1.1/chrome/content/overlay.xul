@@ -5,4 +5,10 @@
 		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<script src="overlay.js"/>
 	<script src="lib.js"/>
+	
+	<menupopup id="menu_viewPopup">
+		<menuitem id="make-it-green-instead"
+				  type="checkbox"
+				  oncommand="Zotero.MakeItRed.toggleGreen(this.getAttribute('checked') === 'true')"/>
+	</menupopup>
 </overlay>

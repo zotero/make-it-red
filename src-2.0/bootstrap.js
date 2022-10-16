@@ -1,4 +1,7 @@
 var stylesheetID = 'make-it-red-stylesheet';
+var ftlID = 'make-it-red-ftl';
+var menuitemID = 'make-it-green-instead';
+var addedElementIDs = [stylesheetID, ftlID, menuitemID];
 
 function log(msg) {
 	Zotero.debug("Make It Red: " + msg);
@@ -15,12 +18,26 @@ async function startup({ id, version, rootURI }) {
 	var zp = Zotero.getActiveZoteroPane();
 	if (zp) {
 		let doc = zp.document;
-		let link = doc.createElement('link');
-		link.id = stylesheetID;
-		link.type = 'text/css';
-		link.rel = 'stylesheet';
-		link.href = rootURI + 'style.css';
-		doc.documentElement.appendChild(link);
+		let link1 = doc.createElement('link');
+		link1.id = stylesheetID;
+		link1.type = 'text/css';
+		link1.rel = 'stylesheet';
+		link1.href = rootURI + 'style.css';
+		doc.documentElement.appendChild(link1);
+
+		let link2 = doc.createElement('link');
+		link2.id = ftlID;
+		link2.rel = 'localization';
+		link2.href = 'make-it-red.ftl';
+		doc.documentElement.appendChild(link2);
+
+		let menuitem = doc.createXULElement('menuitem');
+		menuitem.id = menuitemID;
+		menuitem.setAttribute('type', 'checkbox');
+		menuitem.setAttribute('data-l10n-id', 'make-it-green-instead');
+		// MozMenuItem#checked is available in Zotero 7
+		menuitem.addEventListener('command', () => Zotero.MakeItRed.toggleGreen(menuitem.checked));
+		doc.getElementById('menu_viewPopup').appendChild(menuitem);
 	}
 	
 	Services.scriptloader.loadSubScript(rootURI + 'lib.js');
@@ -33,8 +50,9 @@ function shutdown() {
 	// Remove stylesheet
 	var zp = Zotero.getActiveZoteroPane();
 	if (zp) {
-		let stylesheet = zp.document.getElementById(stylesheetID);
-		stylesheet.parentNode.removeChild(stylesheet);
+		for (let id of addedElementIDs) {
+			zp.document.getElementById(id)?.remove();
+		}
 	}
 }
 
