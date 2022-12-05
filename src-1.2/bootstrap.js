@@ -20,6 +20,7 @@ function log(msg) {
 async function waitForZotero() {
 	if (typeof Zotero != 'undefined') {
 		await Zotero.initializationPromise;
+		return;
 	}
 	
 	var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
