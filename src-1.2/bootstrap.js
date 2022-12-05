@@ -28,6 +28,7 @@ async function waitForZotero() {
 	while (windows.hasMoreElements()) {
 		let win = windows.getNext();
 		if (win.Zotero) {
+			Zotero = win.Zotero;
 			found = true;
 			break;
 		}
