@@ -5,7 +5,10 @@ if (!Zotero.MakeItRed) {
 		},
 		
 		async foo() {
-			this.log("Foo");
+			// `window` is the global object in Zotero 6 overlay scope, and global properties
+			// are included automatically in Zotero 7
+			var host = new URL('https://foo.com/path').host;
+			this.log(`Host is ${host}`);
 		},
 		
 		toggleGreen(enabled) {
