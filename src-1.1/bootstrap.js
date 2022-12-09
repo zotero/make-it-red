@@ -64,7 +64,8 @@ async function startup({ id, version, resourceURI, rootURI = resourceURI.spec })
 	if (typeof Services == 'undefined') {
 		var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 	}
-	Services.scriptloader.loadSubScript(rootURI + 'lib.js');
+	// Load chrome/content file directly via file:/// URL
+	Services.scriptloader.loadSubScript(rootURI + 'chrome/content/lib.js');
 	Zotero.MakeItRed.foo();
 }
 
