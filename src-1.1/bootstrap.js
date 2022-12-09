@@ -54,7 +54,9 @@ async function startup({ id, version, resourceURI, rootURI = resourceURI.spec })
 		menuitem.id = menuitemID;
 		menuitem.setAttribute('type', 'checkbox');
 		menuitem.setAttribute('data-l10n-id', 'make-it-green-instead');
-		menuitem.addEventListener('command', () => Zotero.MakeItRed.toggleGreen(menuitem.checked));
+		menuitem.addEventListener('command', () => {
+			Zotero.MakeItRed.toggleGreen(menuitem.getAttribute('checked') === 'true');
+		});
 		doc.getElementById('menu_viewPopup').appendChild(menuitem);
 	}
 	
