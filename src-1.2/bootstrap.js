@@ -132,5 +132,11 @@ function shutdown() {
 }
 
 function uninstall() {
+	// `Zotero` object isn't available in `uninstall()` in Zotero 6, so log manually
+	if (typeof Zotero == 'undefined') {
+		dump("Make It Red: Uninstalled\n\n");
+		return;
+	}
+	
 	log("Uninstalled");
 }
