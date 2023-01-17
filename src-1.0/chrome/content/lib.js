@@ -8,6 +8,8 @@ if (!Zotero.MakeItRed) {
 			// `window` is the global object in overlay scope
 			var host = new URL('https://foo.com/path').host;
 			this.log(`Host is ${host}`);
+			
+			this.log(`Intensity is ${Zotero.Prefs.get('extensions.make-it-red.intensity', true)}`);
 		},
 
 		toggleGreen(enabled) {

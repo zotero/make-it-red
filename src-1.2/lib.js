@@ -13,6 +13,8 @@ if (!Zotero.MakeItRed) {
 			// Zotero 7
 			var host = new URL('https://foo.com/path').host;
 			this.log(`Host is ${host}`);
+			
+			this.log(`Intensity is ${Zotero.Prefs.get('extensions.make-it-red.intensity', true)}`);
 		},
 
 		toggleGreen(enabled) {

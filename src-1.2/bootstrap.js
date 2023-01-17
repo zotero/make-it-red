@@ -57,13 +57,38 @@ async function waitForZotero() {
 	await Zotero.initializationPromise;
 }
 
+
+// Loads default preferences from defaults/preferences/prefs.js in Zotero 6
+function setDefaultPrefs(rootURI) {
+	var branch = Services.prefs.getDefaultBranch("");
+	var obj = {
+		pref(pref, value) {
+			switch (typeof value) {
+				case 'boolean':
+					branch.setBoolPref(pref, value);
+					break;
+				case 'string':
+					branch.setStringPref(pref, value);
+					break;
+				case 'number':
+					branch.setIntPref(pref, value);
+					break;
+				default:
+					Zotero.logError(`Invalid type '${typeof(value)}' for pref '${pref}'`);
+			}
+		}
+	};
+	Services.scriptloader.loadSubScript(rootURI + "defaults/preferences/prefs.js", obj);
+}
+
+
 async function install() {
 	await waitForZotero();
 	
 	log("Installed");
 }
 
-async function startup({ id, version, resourceURI, rootURI = resourceURI.spec }) {
+async function startup({ id, version, resourceURI, rootURI = resourceURI.spec }, reason) {
 	await waitForZotero();
 	
 	log("Starting");
@@ -71,6 +96,11 @@ async function startup({ id, version, resourceURI, rootURI = resourceURI.spec })
 	// 'Services' may not be available in Zotero 6
 	if (typeof Services == 'undefined') {
 		var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
+	}
+	
+	// Read prefs from defaults/preferences/prefs.js when the plugin is installed or enabled in Zotero 6
+	if (Zotero.platformMajorVersion < 102 && (reason == ADDON_INSTALL || reason == ADDON_ENABLE)) {
+		setDefaultPrefs(rootURI);
 	}
 	
 	// Add DOM elements to the main Zotero pane
