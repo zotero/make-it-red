@@ -58,7 +58,7 @@ async function waitForZotero() {
 }
 
 
-// Loads default preferences from defaults/preferences/prefs.js in Zotero 6
+// Loads default preferences from prefs.js in Zotero 6
 function setDefaultPrefs(rootURI) {
 	var branch = Services.prefs.getDefaultBranch("");
 	var obj = {
@@ -78,7 +78,7 @@ function setDefaultPrefs(rootURI) {
 			}
 		}
 	};
-	Services.scriptloader.loadSubScript(rootURI + "defaults/preferences/prefs.js", obj);
+	Services.scriptloader.loadSubScript(rootURI + "prefs.js", obj);
 }
 
 
@@ -88,7 +88,7 @@ async function install() {
 	log("Installed");
 }
 
-async function startup({ id, version, resourceURI, rootURI = resourceURI.spec }, reason) {
+async function startup({ id, version, resourceURI, rootURI = resourceURI.spec }) {
 	await waitForZotero();
 	
 	log("Starting");
@@ -98,8 +98,8 @@ async function startup({ id, version, resourceURI, rootURI = resourceURI.spec },
 		var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 	}
 	
-	// Read prefs from defaults/preferences/prefs.js when the plugin is installed or enabled in Zotero 6
-	if (Zotero.platformMajorVersion < 102 && (reason == ADDON_INSTALL || reason == ADDON_ENABLE)) {
+	// Read prefs from prefs.js when the plugin in Zotero 6
+	if (Zotero.platformMajorVersion < 102) {
 		setDefaultPrefs(rootURI);
 	}
 	
