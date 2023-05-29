@@ -143,7 +143,7 @@ async function startup({ id, version, resourceURI, rootURI = resourceURI.spec })
 		}
 	}
 	
-	Services.scriptloader.loadSubScript(rootURI + 'lib.js');
+	Services.scriptloader.loadSubScript(rootURI + 'lib.js', {}, 'utf-8');
 	Zotero.MakeItRed.foo();
 }
 
