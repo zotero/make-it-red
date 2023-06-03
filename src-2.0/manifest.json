@@ -3,6 +3,7 @@
 	"name": "Make It Red",
 	"version": "2.0",
 	"description": "Makes everything red",
+	"homepage_url": "https://github.com/zotero/make-it-red",
 	"applications": {
 		"zotero": {
 			"id": "make-it-red@zotero.org",

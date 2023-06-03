@@ -8,6 +8,7 @@
         <em:version>1.2</em:version>
         <em:multiprocessCompatible>true</em:multiprocessCompatible>
         <em:updateURL>https://zotero-download.s3.amazonaws.com/tmp/make-it-red/updates-1.1.json</em:updateURL>
+        <em:homepageURL>https://github.com/zotero/make-it-red</em:homepageURL>
         <em:localized>
             <Description>
                 <em:locale>en-US</em:locale>
