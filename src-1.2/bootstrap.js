@@ -159,6 +159,8 @@ function shutdown() {
 			if (elem) elem.remove();
 		}
 	}
+	
+	Zotero.MakeItRed = undefined;
 }
 
 function uninstall() {

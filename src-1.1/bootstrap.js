@@ -79,6 +79,8 @@ function shutdown() {
 			zp.document.getElementById(id)?.remove();
 		}
 	}
+	
+	Zotero.MakeItRed = undefined;
 }
 
 function uninstall() {
