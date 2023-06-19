@@ -5,10 +5,12 @@ function log(msg) {
 async function init() {
 	log("Initializing");
 	await Zotero.initializationPromise;
-	Zotero.MakeItRed.foo();
+	MakeItRed.main();
 	
-	let stringBundle = Services.strings.createBundle('chrome://make-it-red/locale/make-it-red.properties');
-	Zotero.getMainWindow().document.getElementById('make-it-green-instead')
+	let stringBundle = Services.strings.createBundle(
+		'chrome://make-it-red/locale/make-it-red.properties'
+	);
+	Zotero.getMainWindow().document.getElementById('make-it-red-green-instead')
 		.setAttribute('label', stringBundle.GetStringFromName('makeItGreenInstead.label'));
 }
 
