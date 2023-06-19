@@ -78,7 +78,7 @@ function setDefaultPrefs(rootURI) {
 }
 
 
-function install() {
+async function install() {
 	await waitForZotero();
 	
 	log("Installed");
