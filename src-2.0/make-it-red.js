@@ -30,12 +30,7 @@ MakeItRed = {
 		this.storeAddedElement(link1);
 		
 		// Use Fluent for localization
-		let link2 = doc.createElement('link');
-		link2.id = 'make-it-red-ftl';
-		link2.rel = 'localization';
-		link2.href = 'make-it-red.ftl';
-		doc.documentElement.appendChild(link2);
-		this.storeAddedElement(link2);
+		window.MozXULElement.insertFTLIfNeeded("make-it-red.ftl");
 		
 		// Add menu option
 		let menuitem = doc.createXULElement('menuitem');
@@ -60,6 +55,9 @@ MakeItRed = {
 	},
 	
 	storeAddedElement(elem) {
+		if (!elem.id) {
+			throw new Error("Element must have an id");
+		}
 		this.addedElementIDs.push(elem.id);
 	},
 	
@@ -69,6 +67,7 @@ MakeItRed = {
 		for (let id of this.addedElementIDs) {
 			doc.getElementById(id)?.remove();
 		}
+		doc.querySelector('[href="make-it-red.ftl"]').remove();
 	},
 	
 	removeFromAllWindows() {
