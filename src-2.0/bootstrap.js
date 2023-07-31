@@ -23,6 +23,14 @@ async function startup({ id, version, rootURI }) {
 	await MakeItRed.main();
 }
 
+function onMainWindowLoad({ window }) {
+	MakeItRed.addToWindow(window);
+}
+
+function onMainWindowUnload({ window }) {
+	MakeItRed.removeFromWindow(window);
+}
+
 function shutdown() {
 	log("Shutting down");
 	MakeItRed.removeFromAllWindows();
