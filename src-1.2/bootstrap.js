@@ -53,6 +53,37 @@ async function waitForZotero() {
 	await Zotero.initializationPromise;
 }
 
+function listenMainWindowEvents() {
+	const mainWindowListener = {
+		onOpenWindow: function (aWindow) {
+			let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
+				.getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
+			async function onload() {
+				domWindow.removeEventListener("load", onload, false);
+				if (
+					domWindow.location.href
+					!== "chrome://zotero/content/zoteroPane.xhtml"
+				) {
+					return;
+				}
+				onMainWindowLoad({ window: domWindow });
+			}
+			domWindow.addEventListener("load", onload, false);
+		},
+		onCloseWindow: async function (aWindow) {
+			let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
+				.getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
+			if (
+				domWindow.location.href !== "chrome://zotero/content/zoteroPane.xhtml"
+			) {
+				return;
+			}
+			onMainWindowUnload({ window: domWindow });
+		},
+	};
+	Services.wm.addListener(mainWindowListener);
+}
+
 
 // Loads default preferences from prefs.js in Zotero 6
 function setDefaultPrefs(rootURI) {
@@ -92,8 +123,10 @@ async function startup({ id, version, resourceURI, rootURI = resourceURI.spec })
 		var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 	}
 	
-	// Read prefs from prefs.js in Zotero 6
 	if (Zotero.platformMajorVersion < 102) {
+		// Listen window load/unload in Zotero 6
+		listenMainWindowEvents();
+		// Read prefs from prefs.js in Zotero 6
 		setDefaultPrefs(rootURI);
 	}
 	
@@ -102,6 +135,14 @@ async function startup({ id, version, resourceURI, rootURI = resourceURI.spec })
 	MakeItRed.init({ id, version, rootURI });
 	MakeItRed.addToAllWindows();
 	await MakeItRed.main();
+}
+
+function onMainWindowLoad({ window }) {
+	MakeItRed.addToWindow(window);
+}
+
+function onMainWindowUnload({ window }) {
+	MakeItRed.removeFromWindow(window);
 }
 
 function shutdown() {
