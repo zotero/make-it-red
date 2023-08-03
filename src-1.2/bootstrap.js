@@ -119,11 +119,11 @@ async function startup({ id, version, resourceURI, rootURI = resourceURI.spec })
 		var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 	}
 	
-	// Zotero 6
 	if (Zotero.platformMajorVersion < 102) {
-		// Listen for window load/unload events
+		// Listen for window load/unload events in Zotero 6, since onMainWindowLoad/Unload don't
+		// get called
 		listenForMainWindowEvents();
-		// Read prefs from prefs.js
+		// Read prefs from prefs.js in Zotero 6
 		setDefaultPrefs(rootURI);
 	}
 	
