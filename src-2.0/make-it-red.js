@@ -46,9 +46,8 @@ MakeItRed = {
 	},
 	
 	addToAllWindows() {
-		var enumerator = Services.wm.getEnumerator("navigator:browser");
-		while (enumerator.hasMoreElements()) {
-			let win = enumerator.getNext();
+		var windows = Zotero.getMainWindows();
+		for (let win of windows) {
 			if (!win.ZoteroPane) continue;
 			this.addToWindow(win);
 		}
@@ -71,9 +70,8 @@ MakeItRed = {
 	},
 	
 	removeFromAllWindows() {
-		var enumerator = Services.wm.getEnumerator("navigator:browser");
-		while (enumerator.hasMoreElements()) {
-			let win = enumerator.getNext();
+		var windows = Zotero.getMainWindows();
+		for (let win of windows) {
 			if (!win.ZoteroPane) continue;
 			this.removeFromWindow(win);
 		}
