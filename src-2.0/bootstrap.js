@@ -5,11 +5,11 @@ function log(msg) {
 }
 
 function install() {
-	log("Installed");
+	log("Installed 2.0");
 }
 
 async function startup({ id, version, rootURI }) {
-	log("Starting");
+	log("Starting 2.0");
 	
 	Zotero.PreferencePanes.register({
 		pluginID: 'make-it-red@zotero.org',
@@ -32,11 +32,11 @@ function onMainWindowUnload({ window }) {
 }
 
 function shutdown() {
-	log("Shutting down");
+	log("Shutting down 2.0");
 	MakeItRed.removeFromAllWindows();
 	MakeItRed = undefined;
 }
 
 function uninstall() {
-	log("Uninstalled");
+	log("Uninstalled 2.0");
 }

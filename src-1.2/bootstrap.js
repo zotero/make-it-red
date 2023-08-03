@@ -108,10 +108,12 @@ function setDefaultPrefs(rootURI) {
 async function install() {
 	await waitForZotero();
 	
-	log("Installed");
+	log("Installed 1.2");
 }
 
 async function startup({ id, version, resourceURI, rootURI = resourceURI.spec }) {
+	log("Starting 1.2");
+	
 	await waitForZotero();
 	
 	// 'Services' may not be available in Zotero 6
@@ -143,7 +145,7 @@ function onMainWindowUnload({ window }) {
 }
 
 function shutdown() {
-	log("Shutting down");
+	log("Shutting down 1.2");
 	MakeItRed.removeFromAllWindows();
 	MakeItRed = undefined;
 }
@@ -155,5 +157,5 @@ function uninstall() {
 		return;
 	}
 	
-	log("Uninstalled");
+	log("Uninstalled 1.2");
 }
