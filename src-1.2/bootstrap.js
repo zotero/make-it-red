@@ -3,6 +3,8 @@ if (typeof Zotero == 'undefined') {
 }
 var MakeItRed;
 
+let mainWindowListener;
+
 function log(msg) {
 	Zotero.debug("Make It Red: " + msg);
 }
@@ -55,7 +57,7 @@ async function waitForZotero() {
 
 // Adds main window open/close listeners in Zotero 6
 function listenForMainWindowEvents() {
-	const mainWindowListener = {
+	mainWindowListener = {
 		onOpenWindow: function (aWindow) {
 			let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
 				.getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
@@ -80,6 +82,11 @@ function listenForMainWindowEvents() {
 	Services.wm.addListener(mainWindowListener);
 }
 
+function removeMainWindowListener() {
+	if (mainWindowListener) {
+		Services.wm.removeListener(mainWindowListener);
+	}
+}
 
 // Loads default preferences from prefs.js in Zotero 6
 function setDefaultPrefs(rootURI) {
@@ -146,6 +153,11 @@ function onMainWindowUnload({ window }) {
 
 function shutdown() {
 	log("Shutting down 1.2");
+
+	if (Zotero.platformMajorVersion < 102) {
+		removeMainWindowListener();
+	}
+
 	MakeItRed.removeFromAllWindows();
 	MakeItRed = undefined;
 }
