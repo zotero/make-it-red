@@ -61,7 +61,7 @@ function listenForMainWindowEvents() {
 				.getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
 			async function onload() {
 				domWindow.removeEventListener("load", onload, false);
-				if (domWindow.location.href !== "chrome://zotero/content/zoteroPane.xhtml") {
+				if (domWindow.location.href !== "chrome://zotero/content/standalone/standalone.xul") {
 					return;
 				}
 				onMainWindowLoad({ window: domWindow });
@@ -71,7 +71,7 @@ function listenForMainWindowEvents() {
 		onCloseWindow: async function (aWindow) {
 			let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
 				.getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
-			if (domWindow.location.href !== "chrome://zotero/content/zoteroPane.xhtml") {
+			if (domWindow.location.href !== "chrome://zotero/content/standalone/standalone.xul") {
 				return;
 			}
 			onMainWindowUnload({ window: domWindow });
