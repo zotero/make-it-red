@@ -119,9 +119,9 @@ async function install() {
 }
 
 async function startup({ id, version, resourceURI, rootURI = resourceURI.spec }) {
-	log("Starting 1.2");
-	
 	await waitForZotero();
+	
+	log("Starting 1.2");
 	
 	// 'Services' may not be available in Zotero 6
 	if (typeof Services == 'undefined') {
