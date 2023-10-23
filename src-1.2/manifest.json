@@ -6,7 +6,7 @@
 	"homepage_url": "https://github.com/zotero/make-it-red",
 	"applications": {
 		"zotero": {
-			"id": "make-it-red@zotero.org",
+			"id": "make-it-red@example.com",
 			"update_url": "https://zotero-download.s3.amazonaws.com/tmp/make-it-red/updates-1.2.json",
 			"strict_min_version": "6.999",
 			"strict_max_version": "7.0.*"

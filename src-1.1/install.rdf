@@ -3,7 +3,7 @@
         xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
     <Description about="urn:mozilla:install-manifest">
-        <em:id>make-it-red@zotero.org</em:id>
+        <em:id>make-it-red@example.com</em:id>
         <em:name>Make It Red</em:name>
         <em:version>1.1</em:version>
         <em:multiprocessCompatible>true</em:multiprocessCompatible>

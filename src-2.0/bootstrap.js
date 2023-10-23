@@ -12,7 +12,7 @@ async function startup({ id, version, rootURI }) {
 	log("Starting 2.0");
 	
 	Zotero.PreferencePanes.register({
-		pluginID: 'make-it-red@zotero.org',
+		pluginID: 'make-it-red@example.com',
 		src: rootURI + 'preferences.xhtml',
 		scripts: [rootURI + 'preferences.js']
 	});
