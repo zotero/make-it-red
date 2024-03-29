@@ -18,6 +18,11 @@ MakeItRed = {
 	},
 	
 	addToWindow(window) {
+		if (window._makeItRedAdded) {
+			return;
+		}
+		window._makeItRedAdded = true;
+		
 		let doc = window.document;
 		
 		// Add a stylesheet to the main Zotero pane
@@ -61,12 +66,17 @@ MakeItRed = {
 	},
 	
 	removeFromWindow(window) {
-		var doc = window.document;
+		if (!window._makeItRedAdded) {
+			return;
+		}
+		window._makeItRedAdded = false;
+
+		let doc = window.document;
 		// Remove all elements added to DOM
 		for (let id of this.addedElementIDs) {
 			doc.getElementById(id)?.remove();
 		}
-		doc.querySelector('[href="make-it-red.ftl"]').remove();
+		doc.querySelector('[href="make-it-red.ftl"]')?.remove();
 	},
 	
 	removeFromAllWindows() {
@@ -84,10 +94,18 @@ MakeItRed = {
 	
 	async main() {
 		// Global properties are included automatically in Zotero 7
-		var host = new URL('https://foo.com/path').host;
+		let host = new URL('https://foo.com/path').host;
 		this.log(`Host is ${host}`);
 		
 		// Retrieve a global pref
 		this.log(`Intensity is ${Zotero.Prefs.get('extensions.make-it-red.intensity', true)}`);
+
+		// Load sub scripts
+		Services.scriptloader.loadSubScript(this.rootURI + 'preferencePanes.js', this);
+		Services.scriptloader.loadSubScript(this.rootURI + 'itemPaneSections.js', this);
+
+		// Use Zotero plugin API to register stuff
+		this.registerPrefPanes();
+		this.registerItemPaneSections();
 	},
 };
