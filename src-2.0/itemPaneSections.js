@@ -4,7 +4,7 @@
 		Zotero.ItemPaneManager.registerSection({
 			paneID: "example",
 			pluginID: this.id,
-			head: {
+			header: {
 				l10nID: "make-it-red-item-section-example1-head-text",
 				icon: "chrome://zotero/skin/16/universal/book.svg",
 			},
@@ -26,7 +26,7 @@
 		Zotero.ItemPaneManager.registerSection({
 			paneID: "reader-example",
 			pluginID: this.id,
-			head: {
+			header: {
 				l10nID: "make-it-red-item-section-example2-head-text",
 				// Optional
 				l10nArgs: `{"status": "Initialized"}`,
