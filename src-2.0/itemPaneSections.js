@@ -11,6 +11,7 @@
 			sidenav: {
 				l10nID: "make-it-red-item-section-example1-sidenav-tooltip",
 				icon: "chrome://zotero/skin/20/universal/save.svg",
+				showByDefault: true,
 			},
 			onRender: ({ body, item, editable, tabType }) => {
 				body.textContent
