@@ -1,0 +1,14 @@
+{
+  "name": "make-it-red",
+  "version": "2.0.0",
+  "description": "A sample plugin for Zotero 7",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "crypto": "^1.0.1",
+    "zip-dir": "^2.0.0"
+  }
+}
