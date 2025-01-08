@@ -11,24 +11,18 @@ function install() {
 async function startup({ id, version, rootURI }) {
 	log("Starting 2.0");
 	
-	Zotero.PreferencePanes.register({
-		pluginID: 'make-it-red@example.com',
-		src: rootURI + 'preferences.xhtml',
-		scripts: [rootURI + 'preferences.js']
-	});
-	
 	Services.scriptloader.loadSubScript(rootURI + 'make-it-red.js');
 	MakeItRed.init({ id, version, rootURI });
 	MakeItRed.addToAllWindows();
 	await MakeItRed.main();
 }
 
-function onMainWindowLoad({ window }) {
-	MakeItRed.addToWindow(window);
+function onMainWindowLoad({ win }) {
+	MakeItRed.addToWindow(win);
 }
 
-function onMainWindowUnload({ window }) {
-	MakeItRed.removeFromWindow(window);
+function onMainWindowUnload(win) {
+	MakeItRed.removeFromWindow(win);
 }
 
 function shutdown() {
